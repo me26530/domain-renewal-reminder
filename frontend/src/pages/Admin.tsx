@@ -308,7 +308,6 @@ export function Admin() {
                 <h1 className="text-xl sm:text-2xl font-bold text-gradient">
                   管理员面板
                 </h1>
-                <p className="text-xs sm:text-sm text-gray-600 font-medium">用户管理·SMTP 配置·操作日志</p>
               </div>
             </div>
             <button
