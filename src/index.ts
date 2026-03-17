@@ -15,7 +15,6 @@ export interface Env {
   KV: KVNamespace;
   ADMIN_PASSWORD: string;
   ENCRYPTION_KEY: string;
-  FRONTEND_URL?: string;
 }
 
 // Initialize Hono app

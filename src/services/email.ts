@@ -205,7 +205,6 @@ export class EmailService {
       });
 
       // Import Cloudflare Workers TCP Socket API
-      // @ts-expect-error - Cloudflare Workers specific API
       const { connect } = await import('cloudflare:sockets');
 
       const socket = connect({
@@ -494,9 +493,9 @@ export class EmailService {
   /**
    * Compose verification email
    */
-  composeVerificationEmail(_email: string, token: string, baseUrl: string): { subject: string; body: string } {
-    // Remove trailing slash from baseUrl to avoid double slashes
-    const cleanBaseUrl = baseUrl.replace(/\/$/, '');
+  composeVerificationEmail(_email: string, token: string, appUrl: string): { subject: string; body: string } {
+    // Remove trailing slash from the app URL to avoid double slashes.
+    const cleanBaseUrl = appUrl.replace(/\/$/, '');
     const verificationUrl = `${cleanBaseUrl}/verify?token=${token}`;
 
     const subject = '验证您的邮箱地址 - 域名续期提醒服务';

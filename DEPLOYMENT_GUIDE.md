@@ -84,15 +84,6 @@ wrangler secret put ADMIN_PASSWORD
 wrangler secret put ENCRYPTION_KEY
 # 粘贴上面生成的密钥
 
-# 3. 设置前端 URL（用于邮件验证链接）
-wrangler secret put FRONTEND_URL
-# 输入前端 URL，例如: https://yourdomain.com
-# 或 https://xxx.pages.dev
-# 或者先跳过，部署前端后再设置
-```
-
-> **注意**: `FRONTEND_URL` 用于生成邮件中的验证链接。如果不设置，系统会使用请求的 origin，但建议设置为你的实际前端域名。
-
 ### 5. 部署后端
 
 ```bash
@@ -136,35 +127,11 @@ git push
 
 构建完成后会得到前端 URL，例如：`https://xxx.pages.dev`
 
-### 4. 更新后端 FRONTEND_URL（如果之前跳过）
+### 4. 无需再配置前端地址
 
-如果在步骤一中跳过了 `FRONTEND_URL` 设置，现在可以设置：
+邮件验证链接会自动根据浏览器请求中的 `Origin` 或 `Referer` 推断前端地址，因此后端不需要再额外配置 `FRONTEND_URL`。
 
-```bash
-wrangler secret put FRONTEND_URL
-# 输入前端 URL，例如: https://xxx.pages.dev
-# 或你的自定义域名: https://yourdomain.com
-```
-
-设置后需要重新部署后端：
-
-```bash
-npm run deploy
-```
-
-> **重要**: 设置 `FRONTEND_URL` 后，建议重新部署前端以清除 CDN 缓存:
-> 
-> **方法 1: 使用命令行**
-> ```bash
-> cd frontend
-> npm run build
-> npx wrangler pages deploy dist --project-name=domain-renewal-reminder
-> ```
-> 
-> **方法 2: 在 Cloudflare Dashboard 中**
-> 1. 进入 Workers & Pages > 你的 Pages 项目
-> 2. 点击 "View build" 或 "Deployments"
-> 3. 点击 "Retry deployment" 重新部署最新版本
+只要前端正确设置 `VITE_API_URL` 指向后端 API，注册和重发验证邮件时就会自动生成正确的前端验证链接。
 
 ---
 
@@ -244,7 +211,7 @@ curl https://你的worker地址.workers.dev/api/health
 
 **解决**:
 1. 检查管理员面板是否配置了邮件服务
-2. 检查后端是否设置了 `FRONTEND_URL` 环境变量
+2. 检查前端请求是否从正确域名发起，避免代理或中转层改写 `Origin` / `Referer`
 3. 查看 Worker 日志: `wrangler tail`
 4. 检查垃圾邮件文件夹
 5. 尝试使用 Resend HTTP API 而不是 SMTP
@@ -253,7 +220,7 @@ curl https://你的worker地址.workers.dev/api/health
 
 **解决**:
 1. 确保前端已部署最新版本（包含 `/verify` 路由）
-2. 检查后端 `FRONTEND_URL` 是否指向正确的前端地址
+2. 检查前端是否使用正确的 `VITE_API_URL`
 3. 清除浏览器缓存后重试
 
 ### Q: 管理员密码错误
@@ -300,13 +267,8 @@ git push
 2. 添加域名，如 `app.yourdomain.com`
 3. 按照提示配置 DNS (CNAME 记录)
 4. 等待 SSL 证书生成
-5. 更新后端 `FRONTEND_URL` 环境变量:
-   ```bash
-   wrangler secret put FRONTEND_URL
-   # 输入: https://yourdomain.com
-   ```
-6. 重新部署后端: `npm run deploy`
-7. **重要**: 重新部署前端以清除 CDN 缓存:
+5. 更新前端 `VITE_API_URL`，确保它仍然指向正确的后端 API 地址
+6. **重要**: 重新部署前端以清除 CDN 缓存:
    ```bash
    cd frontend
    npm run build

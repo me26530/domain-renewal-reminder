@@ -8,8 +8,17 @@ import { AdminService } from '../services/admin';
 import { EmailService } from '../services/email';
 import { rateLimitAuth } from '../middleware/rateLimit';
 import { requireAuth } from '../middleware/auth';
+import { resolveAppBaseUrl } from '../utils/appUrl';
 
 const auth = new Hono();
+
+function getVerificationAppUrl(c: { req: { url: string; header(name: string): string | undefined } }): string {
+  return resolveAppBaseUrl(
+    c.req.url,
+    c.req.header('Origin'),
+    c.req.header('Referer')
+  );
+}
 
 // Apply rate limiting to all auth routes
 auth.use('*', rateLimitAuth);
@@ -56,9 +65,9 @@ auth.post('/register', async (c) => {
         const emailService = new EmailService(smtpConfigResult.data);
         
         const token = result.data.verificationToken as string;
-        const baseUrl = (c.env.FRONTEND_URL as string | undefined) || new URL(c.req.url).origin;
+        const appUrl = getVerificationAppUrl(c);
         
-        const { subject, body } = emailService.composeVerificationEmail(email, token, baseUrl);
+        const { subject, body } = emailService.composeVerificationEmail(email, token, appUrl);
         
         console.log('Sending verification email:', {
           to: email,
@@ -66,7 +75,7 @@ auth.post('/register', async (c) => {
           smtpProvider: smtpConfigResult.data.provider,
           smtpHost: smtpConfigResult.data.host,
           smtpPort: smtpConfigResult.data.port,
-          frontendUrl: baseUrl,
+          appUrl,
         });
         
         const emailResult = await emailService.sendEmail(email, subject, body);
@@ -304,15 +313,15 @@ auth.post('/resend-verification', async (c) => {
         const emailService = new EmailService(smtpConfigResult.data);
         
         const token = result.data.verificationToken as string;
-        const baseUrl = (c.env.FRONTEND_URL as string | undefined) || new URL(c.req.url).origin;
+        const appUrl = getVerificationAppUrl(c);
         
-        const { subject, body } = emailService.composeVerificationEmail(email, token, baseUrl);
+        const { subject, body } = emailService.composeVerificationEmail(email, token, appUrl);
         
         console.log('Resending verification email:', {
           to: email,
           subject,
           smtpProvider: smtpConfigResult.data.provider,
-          frontendUrl: baseUrl,
+          appUrl,
         });
         
         const emailResult = await emailService.sendEmail(email, subject, body);
