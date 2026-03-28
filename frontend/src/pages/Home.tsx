@@ -1,62 +1,44 @@
 import { Link } from 'react-router-dom';
 import { BrandLogo } from '../components/logo';
 
-const featureCards = [
+const benefitCards = [
   {
-    title: '续费闭环',
-    description: '从提醒、处理、暂停到续费完成，统一记录状态、备注、负责人和处理时间。',
-    badge: 'Workflow',
+    title: '不再靠记忆续费',
+    description: '把域名到期时间、提醒邮箱和续费链接集中管理，重要日期不会再散落在邮件和备忘录里。',
+    badge: '安心',
   },
   {
-    title: '自动提醒',
-    description: '围绕到期时间自动进入提醒窗口，按日检查发送，避免依赖人工记忆。',
-    badge: 'Automation',
+    title: '提醒、处理、续费一条线',
+    description: '从到期提醒到标记已处理，再到续费后自动进入下一个周期，整个过程保持清晰连续。',
+    badge: '闭环',
   },
   {
-    title: '邮件投递',
-    description: '同时支持 HTTP API 和 SMTP，两种方式都适合个人和团队自托管。',
-    badge: 'Delivery',
-  },
-  {
-    title: 'Cloudflare Stack',
-    description: '基于 Workers、D1、KV、Cron 和 React，部署成本低，维护路径清晰。',
-    badge: 'Platform',
+    title: '简洁、轻量、可长期使用',
+    description: '界面克制直接，适合个人和小团队长期维护自己的域名资产，不需要复杂培训。',
+    badge: '轻量',
   },
 ];
 
-const workflowSteps = [
+const audienceCards = [
   {
-    step: '01',
-    title: '录入域名资产',
-    description: '保存到期时间、提醒邮箱、注册商链接和续费周期，让每个域名都具备可追踪信息。',
+    title: '个人站长',
+    description: '管理博客、作品集、项目站点，不再担心小站因为忘记续费而失效。',
   },
   {
-    step: '02',
-    title: '自动进入提醒窗口',
-    description: '系统依据到期时间计算提醒起点，按计划持续发送，不遗漏关键节点。',
+    title: '小团队',
+    description: '把域名责任人、处理状态和备注放在同一个面板里，交接更顺畅。',
   },
   {
-    step: '03',
-    title: '状态流转与协作',
-    description: '支持标记已处理、暂停提醒、已放弃，并记录负责人、备注和处理时间。',
-  },
-  {
-    step: '04',
-    title: '续费并进入下周期',
-    description: '续费后自动顺延到期日、清零提醒进度，回到新的管理周期。',
+    title: '长期自托管项目',
+    description: '适合作为稳定的内部工具，也适合对外展示成一个完整的产品项目。',
   },
 ];
 
-const signals = [
-  { label: '状态流转', value: 'active / handled / paused / abandoned' },
-  { label: '提醒通道', value: 'HTTP API + SMTP' },
-  { label: '部署方式', value: 'Cloudflare Workers + D1' },
-];
-
-const metrics = [
-  { value: '4', label: '工作流状态' },
-  { value: '2', label: '邮件发送方式' },
-  { value: '100%', label: '自托管友好' },
+const previewItems = [
+  '统一查看即将到期的域名',
+  '自动提醒，避免遗漏关键日期',
+  '记录负责人、备注和处理时间',
+  '续费后自动进入新的提醒周期',
 ];
 
 export function Home() {
@@ -71,8 +53,8 @@ export function Home() {
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <BrandLogo title="爱自由域名管理" subtitle="Domain Renewal Reminder Service" />
           <nav className="landing-nav" aria-label="Homepage actions">
-            <a href="#workflow" className="ghost-button">
-              查看工作流
+            <a href="#benefits" className="ghost-button">
+              了解产品
             </a>
             <Link to="/login" className="secondary-button">
               登录
@@ -87,16 +69,17 @@ export function Home() {
       <main className="app-main landing-main">
         <section className="landing-hero">
           <div className="liquid-panel liquid-panel--hero animate-slideUp">
-            <div className="liquid-chip">Liquid Glass Homepage</div>
+            <div className="liquid-chip">Domain renewal made calm</div>
+
             <div className="landing-copy">
-              <p className="landing-kicker">Brand-first domain operations</p>
+              <p className="landing-kicker">优雅管理你的域名到期与续费</p>
               <h1 className="landing-title">
-                先展示产品价值，
-                <span className="text-gradient"> 再引导用户进入注册和登录流程。</span>
+                把零散提醒，
+                <span className="text-gradient"> 变成一套清晰好用的域名管理体验。</span>
               </h1>
               <p className="landing-description">
-                爱自由域名管理不是单纯的到期提醒页，而是一个面向长期维护的域名续费管理台。
-                它把提醒计划、状态流转、邮件投递和续费闭环集中到一个清晰、可自托管的工作流里。
+                爱自由域名管理帮助你统一记录域名到期时间、续费入口和提醒状态。
+                页面简洁，信息明确，让你在真正需要处理的时候，准确知道哪个域名快到期、谁在负责、是否已经续费。
               </p>
             </div>
 
@@ -108,71 +91,44 @@ export function Home() {
                 已有账号登录
               </Link>
             </div>
-
-            <div className="landing-signal-grid">
-              {signals.map((item) => (
-                <div key={item.label} className="liquid-signal">
-                  <div className="liquid-signal__label">{item.label}</div>
-                  <div className="liquid-signal__value">{item.value}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="liquid-panel liquid-panel--aside animate-slideUp">
             <div className="liquid-preview">
               <div className="liquid-preview__header">
                 <div>
-                  <div className="liquid-preview__eyebrow">Renewal Console</div>
-                  <h2>域名续费闭环，一眼可见</h2>
+                  <div className="liquid-preview__eyebrow">Product preview</div>
+                  <h2>打开面板，就知道现在该处理什么</h2>
                 </div>
                 <div className="liquid-status-pill">
                   <span className="liquid-status-pill__dot" />
-                  Auto check daily
+                  Simple and focused
                 </div>
-              </div>
-
-              <div className="liquid-stat-grid">
-                {metrics.map((item) => (
-                  <div key={item.label} className="liquid-stat-card">
-                    <div className="liquid-stat-card__value">{item.value}</div>
-                    <div className="liquid-stat-card__label">{item.label}</div>
-                  </div>
-                ))}
               </div>
 
               <div className="liquid-stack">
-                <div className="liquid-stack-card">
-                  <div className="liquid-stack-card__label">当前工作流</div>
-                  <div className="liquid-stack-card__title">提醒中 → 已处理 → 已续费</div>
-                  <p>续费完成后自动进入下一个周期，不需要手动重置提醒进度。</p>
-                </div>
-
-                <div className="liquid-stack-card liquid-stack-card--accent">
-                  <div className="liquid-stack-card__label">邮件投递</div>
-                  <div className="liquid-stack-card__title">HTTP API / SMTP</div>
-                  <p>面向个人和小团队，既能快速上线，也保留自托管控制力。</p>
-                </div>
+                {previewItems.map((item) => (
+                  <div key={item} className="liquid-stack-card">
+                    <div className="liquid-stack-card__title">{item}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        <section className="landing-section">
+        <section id="benefits" className="landing-section">
           <div className="landing-section__heading">
-            <div className="liquid-chip liquid-chip--soft">Core capabilities</div>
-            <h2>不是临时页面，而是可以对外展示的产品首页</h2>
+            <div className="liquid-chip liquid-chip--soft">Why it feels better</div>
+            <h2>它不是一个提醒弹窗，而是一个能长期使用的管理页面</h2>
             <p>
-              首屏只保留一个明确主动作，下面用更轻的玻璃信息卡解释产品范围、闭环能力和技术定位。
+              首页只讲产品价值，不讲实现细节。重点是让访客第一眼理解它的用途、气质和适用场景。
             </p>
           </div>
 
           <div className="landing-feature-grid">
-            {featureCards.map((item, index) => (
-              <article
-                key={item.title}
-                className={`liquid-card ${index === 0 ? 'liquid-card--wide' : ''}`}
-              >
+            {benefitCards.map((item) => (
+              <article key={item.title} className="liquid-card">
                 <div className="liquid-card__badge">{item.badge}</div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
@@ -181,19 +137,18 @@ export function Home() {
           </div>
         </section>
 
-        <section id="workflow" className="landing-section">
+        <section className="landing-section">
           <div className="landing-section__heading">
-            <div className="liquid-chip liquid-chip--soft">Renewal workflow</div>
-            <h2>用一个完整工作流，替代“发完提醒就结束”的半成品体验</h2>
+            <div className="liquid-chip liquid-chip--soft">For people who manage domains</div>
+            <h2>适合个人，也适合需要一点协作的团队</h2>
             <p>
-              这套流程把资产录入、自动提醒、协作处理和续费后的周期重置串起来，更适合长期维护和开源展示。
+              你不需要很复杂的系统，只需要一个稳定、顺手、看起来像成品的域名续费管理入口。
             </p>
           </div>
 
           <div className="workflow-grid">
-            {workflowSteps.map((item) => (
-              <article key={item.step} className="workflow-node">
-                <div className="workflow-node__step">{item.step}</div>
+            {audienceCards.map((item, index) => (
+              <article key={item.title} className={`workflow-node ${index === 1 ? 'liquid-card--wide' : ''}`}>
                 <div className="workflow-node__body">
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -206,10 +161,10 @@ export function Home() {
         <section className="landing-section">
           <div className="liquid-panel liquid-panel--cta">
             <div>
-              <div className="liquid-chip liquid-chip--soft">Open source ready</div>
-              <h2 className="landing-cta__title">把它作为个人作品、团队工具，或开源展示项目都成立。</h2>
+              <div className="liquid-chip liquid-chip--soft">Ready when you are</div>
+              <h2 className="landing-cta__title">先看懂它，再决定登录或开始使用。</h2>
               <p className="landing-cta__text">
-                现在访客先看到的是产品价值、品牌和工作流，而不是一上来就被丢到登录页。
+                这就是首页应该做的事：展示产品，而不是一打开就把人直接推进注册和登录流程。
               </p>
             </div>
 
