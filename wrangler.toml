@@ -3,6 +3,15 @@ main = "src/index.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Only serve the API on the custom domain; keep workers.dev and preview URLs
+# closed so the API isn't reachable through Cloudflare's default public hostnames.
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "new.zhiye.de5.net", zone_name = "zhiye.de5.net", custom_domain = true },
+]
+
 # External modules rules
 [[rules]]
 type = "CompiledWasm"
