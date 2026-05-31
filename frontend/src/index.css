@@ -2297,6 +2297,10 @@ pre {
     letter-spacing: 0.08em;
   }
 
+  .home-landing .brand-mark.compact .brand-mark__copy span {
+    display: none;
+  }
+
   .status-banner {
     padding: 14px 14px 14px 16px;
     gap: 12px;
@@ -2397,6 +2401,7 @@ pre {
 .home-hero-copy {
   position: relative;
   z-index: 1;
+  min-width: 0;
 }
 
 .home-hero-visual {
@@ -2458,45 +2463,10 @@ pre {
   z-index: 0;
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
-  object-position: top center;
+  object-position: center;
   filter: saturate(0.96) contrast(1.02);
-}
-
-.home-visual-panel {
-  position: absolute;
-  z-index: 3;
-  border: 1px solid rgba(8, 47, 73, 0.12);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 20px 48px rgba(8, 47, 73, 0.14);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  backdrop-filter: blur(16px) saturate(140%);
-}
-
-.home-visual-panel--left {
-  left: 18px;
-  bottom: 18px;
-  width: min(190px, 42%);
-  padding: 16px;
-}
-
-.home-visual-panel--right {
-  right: 18px;
-  bottom: 18px;
-  display: grid;
-  gap: 10px;
-  width: min(260px, 54%);
-  padding: 12px;
-}
-
-.home-timeline-row {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 9px;
-  min-width: 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -2513,29 +2483,22 @@ pre {
     color: #a5f3fc;
   }
 
-  .home-visual-panel {
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(15, 23, 42, 0.86);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.34);
-  }
 }
 
 @media (max-width: 640px) {
+  .home-hero-copy,
+  .home-hero-visual {
+    width: 100%;
+    max-width: 22rem;
+    justify-self: start;
+  }
+
+  .hero-subtext {
+    overflow-wrap: break-word;
+  }
+
   .home-visual-shell {
     border-radius: 22px;
-  }
-
-  .home-visual-panel--left {
-    width: 46%;
-    padding: 12px;
-  }
-
-  .home-visual-panel--right {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: auto;
-    margin: 12px;
   }
 }
 
