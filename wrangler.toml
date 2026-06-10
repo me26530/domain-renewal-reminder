@@ -3,6 +3,9 @@ main = "src/index.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
+keep_vars = true
+
+
 # Only serve the API on the custom domain; keep workers.dev and preview URLs
 # closed so the API isn't reachable through Cloudflare's default public hostnames.
 workers_dev = false
