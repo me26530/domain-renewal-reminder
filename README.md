@@ -1,5 +1,5 @@
 <!-- markdownlint-disable MD033 -->
-# 爱自由域名管理 / Domain Renewal Reminder Service
+# 爱自由域名管理y / Domain Renewal Reminder Service
 
 <div align="center">
 
